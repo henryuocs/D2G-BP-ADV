@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task 3, Advertorial Rewrite, Down To Ground</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0B0B09;--surface:#131311;--card:#1B1B18;
+  --green:#2D5A3D;--green-mid:#3D7A53;--green-light:#5FAE78;
+  --gold:#C4983A;--gold-light:#DDB85A;
+  --text:#F0EDE6;--text-sec:#9A9790;--text-ter:#5C5A55;
+  --border:#252520;--border-mid:#343430;
+  --green-bg:rgba(45,90,61,.14);--green-border:rgba(61,122,83,.4);
+  --gold-bg:rgba(196,152,58,.1);--gold-border:rgba(196,152,58,.3);
+  --red-bg:rgba(139,42,42,.12);--red-border:rgba(184,64,64,.3);--red-text:#C06060;
+  --fh:'Playfair Display',Georgia,serif;
+  --fb:'IBM Plex Sans',sans-serif;
+  --fm:'IBM Plex Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ── TOP BAR ─────────────────────────────── */
+.topbar{background:rgba(11,11,9,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:.75rem 1.25rem;position:sticky;top:0;z-index:100}
+.topbar-inner{max-width:980px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.topbar-brand{font-family:var(--fh);font-size:.95rem;color:var(--green-light);font-style:italic}
+.topbar-meta{font-family:var(--fm);font-size:.65rem;color:var(--text-ter);letter-spacing:.06em}
+
+/* ── HERO ────────────────────────────────── */
+.hero{padding:3rem 1.25rem 2rem;max-width:980px;margin:0 auto;border-bottom:1px solid var(--border)}
+.hero-eyebrow{font-family:var(--fm);font-size:.68rem;color:var(--green-light);letter-spacing:.16em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+.hero-eyebrow::before{content:'';display:block;width:20px;height:1px;background:var(--green-light)}
+.hero-title{font-family:var(--fh);font-size:clamp(1.9rem,5vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:.75rem}
+.hero-title em{color:var(--green-light);font-style:italic}
+.hero-desc{font-size:1rem;color:var(--text-sec);max-width:620px;line-height:1.75;margin-bottom:1.5rem}
+.meta-row{display:flex;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+.meta-cell{background:var(--card);padding:.85rem 1.25rem;flex:1;min-width:130px}
+.meta-label{font-family:var(--fm);font-size:.6rem;color:var(--text-ter);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.25rem}
+.meta-val{font-size:.85rem;color:var(--text);font-weight:500}
+
+/* ── DARK TABS ───────────────────────────── */
+.tabs-wrap{max-width:980px;margin:1.75rem auto 0;padding:0 1.25rem 4rem}
+.tab-bar{display:flex;gap:.35rem;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:.5rem;scrollbar-width:none;border-bottom:1px solid var(--border);margin-bottom:1.75rem}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:.5rem 1rem;border-radius:6px 6px 0 0;font-family:var(--fm);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1px solid transparent;border-bottom:none;background:transparent;color:var(--text-ter);transition:all .2s;white-space:nowrap;margin-bottom:-1px}
+.tab-btn:hover{color:var(--text-sec)}
+.tab-btn.active{background:var(--card);border-color:var(--border-mid);border-bottom-color:var(--card);color:var(--green-light)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* ── DARK UI CARDS ───────────────────────── */
+.card{background:var(--card);border:1px solid var(--border-mid);border-radius:10px;padding:1.5rem;margin-bottom:1rem}
+.card-label{font-family:var(--fm);font-size:.63rem;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.5rem}
+.card-title{font-family:var(--fh);font-size:1.15rem;font-weight:600;margin-bottom:.6rem;line-height:1.3}
+.card-body{font-size:.87rem;color:var(--text-sec);line-height:1.75}
+.card-body p+p{margin-top:.65rem}
+.card-body strong{color:var(--text)}
+.info-box{background:var(--green-bg);border:1px solid var(--green-border);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1rem;font-size:.85rem;color:var(--text-sec);line-height:1.65}
+.info-box strong{color:var(--text)}
+
+/* ── DIAGNOSIS ───────────────────────────── */
+.issue-card{background:var(--card);border:1px solid var(--border-mid);border-radius:10px;overflow:hidden;margin-bottom:1rem}
+.issue-hdr{padding:.85rem 1.25rem;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.85rem}
+.issue-num{width:26px;height:26px;border-radius:50%;background:var(--red-bg);border:1px solid var(--red-border);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.68rem;color:var(--red-text);flex-shrink:0}
+.issue-ttl{font-weight:600;font-size:.9rem;color:var(--text)}
+.issue-bdy{padding:1rem 1.25rem;font-size:.86rem;color:var(--text-sec);line-height:1.7}
+.issue-orig{margin-top:.7rem;padding:.7rem 1rem;background:var(--red-bg);border-left:2px solid var(--red-border);border-radius:0 5px 5px 0;font-size:.8rem;color:var(--red-text);font-family:var(--fm);line-height:1.55}
+.issue-orig-lbl{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:.25rem}
+.issue-fix{margin-top:.6rem;padding:.7rem 1rem;background:var(--green-bg);border-left:2px solid var(--green-mid);border-radius:0 5px 5px 0;font-size:.8rem;color:var(--green-light);font-family:var(--fm);line-height:1.55}
+.issue-fix-lbl{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:.25rem}
+
+/* ── CHANGE CARDS ────────────────────────── */
+.change-card{background:var(--card);border:1px solid var(--border-mid);border-radius:10px;overflow:hidden;margin-bottom:1rem}
+.change-hdr{padding:.85rem 1.25rem;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.85rem}
+.change-num{width:26px;height:26px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.68rem;color:#fff;flex-shrink:0}
+.change-ttl{font-weight:600;font-size:.9rem;color:var(--text)}
+.change-bdy{padding:1rem 1.25rem;font-size:.86rem;color:var(--text-sec);line-height:1.75}
+.change-bdy p+p{margin-top:.6rem}
+.change-bdy strong{color:var(--text)}
+.impact-badge{display:inline-flex;align-items:center;gap:.4rem;margin-top:.75rem;padding:.35rem .85rem;background:var(--green-bg);border:1px solid var(--green-border);border-radius:4px;font-family:var(--fm);font-size:.68rem;color:var(--green-light)}
+
+/* ── BEFORE / AFTER ──────────────────────── */
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:1.25rem}
+@media(max-width:580px){.ba-grid{grid-template-columns:1fr}}
+.ba-col{background:var(--card);padding:1.25rem}
+.ba-lbl{font-family:var(--fm);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem;font-weight:500}
+.ba-lbl.before{color:var(--red-text)}.ba-lbl.after{color:var(--green-light)}
+.ba-content{font-size:.84rem;line-height:1.75;color:var(--text-sec)}
+.ba-content strong{color:var(--text)}
+.ba-content em{font-family:var(--fh);font-style:italic;color:var(--text);font-size:.92rem}
+
+/* ════════════════════════════════════════════════════
+   ADVERTORIAL PAGE STYLES — light editorial skin
+   ════════════════════════════════════════════════════ */
+.adv-page{background:#FAFAF7;border-radius:12px;overflow:hidden;border:1px solid #E0DDD8;font-family:'IBM Plex Sans',sans-serif;color:#1A1A18;line-height:1.75}
+
+/* site strip */
+.adv-strip{background:#1A2E22;color:#9FCE9F;font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-align:center;padding:.5rem;text-transform:uppercase}
+
+/* article header */
+.adv-article-header{background:#fff;border-bottom:1px solid #E8E5E0;padding:2rem 2.5rem 1.5rem}
+@media(max-width:600px){.adv-article-header{padding:1.5rem 1.25rem 1rem}}
+.adv-category{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#2D5A3D;letter-spacing:.16em;text-transform:uppercase;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.adv-category::before{content:'';display:block;width:18px;height:1px;background:#2D5A3D}
+.adv-h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;line-height:1.15;letter-spacing:-.02em;color:#0D0D0B;margin-bottom:.75rem}
+.adv-h1 em{color:#2D5A3D;font-style:italic}
+.adv-deck{font-size:1rem;color:#5A5855;line-height:1.7;max-width:640px;margin-bottom:1rem}
+.adv-byline-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.adv-byline{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:#9A9790}
+.adv-share-note{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#C4C1BB;background:#F5F2EE;padding:.25rem .65rem;border-radius:4px}
+
+/* article body */
+.adv-body{padding:2rem 2.5rem;max-width:760px;margin:0 auto}
+@media(max-width:600px){.adv-body{padding:1.5rem 1.25rem}}
+
+/* opening paragraphs */
+.adv-opening{margin-bottom:2rem;padding-bottom:1.75rem;border-bottom:2px solid #E8E5E0}
+.adv-opening p{font-size:.97rem;color:#3A3835;line-height:1.85;margin-bottom:.85rem}
+.adv-opening p:last-child{margin-bottom:0}
+.adv-opening .callout{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:#2D5A3D;border-left:3px solid #2D5A3D;padding-left:1rem;margin:1.25rem 0;line-height:1.65}
+
+/* section blocks */
+.adv-section{margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid #EDEAE5}
+.adv-section:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.adv-section-tag{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#C4983A;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.5rem}
+.adv-section-h2{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:#0D0D0B;margin-bottom:.85rem;line-height:1.25}
+.adv-section p{font-size:.93rem;color:#3A3835;line-height:1.85;margin-bottom:.8rem}
+.adv-section p:last-child{margin-bottom:0}
+.adv-section strong{color:#0D0D0B}
+
+/* image placeholder */
+.adv-img-ph{background:#F0EDE6;border:1px dashed #D4CFC9;border-radius:8px;padding:2rem 1.5rem;text-align:center;margin:1.25rem 0;color:#9A9790;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.06em}
+.adv-img-ph span{display:block;font-size:1.5rem;margin-bottom:.35rem;opacity:.4}
+
+/* study callout */
+.adv-study{background:#F5FBF7;border:1px solid #B8D8C4;border-radius:8px;padding:1rem 1.25rem;margin:1rem 0}
+.adv-study-lbl{font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:#2D5A3D;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.35rem}
+.adv-study p{font-size:.85rem;color:#3A5A42;line-height:1.65;margin:0}
+
+/* safety box */
+.adv-safety{background:#FFFBF0;border:1px solid #E5D88A;border-radius:8px;padding:1rem 1.25rem;margin:1rem 0;display:flex;gap:.85rem}
+.adv-safety-icon{font-size:1.1rem;flex-shrink:0;margin-top:.1rem}
+.adv-safety p{font-size:.86rem;color:#5A5020;line-height:1.65;margin:0}
+.adv-safety strong{color:#3A3010}
+
+/* mechanism steps */
+.adv-steps{margin:1rem 0}
+.adv-step{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.85rem}
+.adv-step-num{width:28px;height:28px;border-radius:50%;background:#2D5A3D;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:#fff;flex-shrink:0;margin-top:.1rem}
+.adv-step-content{}
+.adv-step-title{font-weight:600;font-size:.9rem;color:#0D0D0B;margin-bottom:.2rem}
+.adv-step-body{font-size:.86rem;color:#5A5855;line-height:1.65}
+
+/* mid CTA */
+.adv-mid-cta{background:linear-gradient(135deg,#1A2E22 0%,#2D5A3D 100%);border-radius:10px;padding:1.75rem;text-align:center;margin:1.75rem 0;color:#fff}
+.adv-mid-cta h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin-bottom:.4rem;color:#fff}
+.adv-mid-cta p{font-size:.85rem;color:rgba(255,255,255,.75);margin-bottom:1rem;line-height:1.5}
+.adv-cta-btn{display:inline-block;background:#fff;color:#1A2E22;padding:.75rem 2rem;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:.8rem;letter-spacing:.06em;font-weight:500;text-decoration:none;margin-bottom:.5rem}
+.adv-cta-trust{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:rgba(255,255,255,.55);line-height:1.6}
+
+/* reviews */
+.adv-reviews{display:grid;gap:1rem;margin:1.25rem 0}
+.adv-review{background:#fff;border:1px solid #E8E5E0;border-radius:8px;padding:1.1rem 1.25rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.adv-review-stars{color:#C4983A;font-size:.85rem;margin-bottom:.4rem}
+.adv-review-text{font-size:.88rem;color:#3A3835;line-height:1.7;font-style:italic;margin-bottom:.5rem}
+.adv-review-name{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:#9A9790}
+.adv-review-count{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:#9A9790;text-align:center;margin-top:.5rem;padding:.5rem;background:#F5F2EE;border-radius:6px}
+
+/* comparison table */
+.adv-compare{width:100%;border-collapse:collapse;border-radius:8px;overflow:hidden;border:1px solid #E0DDD8;margin:1.25rem 0;font-size:.84rem}
+.adv-compare th{padding:.75rem 1rem;font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;text-align:left}
+.adv-compare th:first-child{background:#F5F2EE;color:#5A5855;width:38%}
+.adv-compare th:nth-child(2){background:#1A2E22;color:#9FCE9F}
+.adv-compare th:nth-child(3){background:#F0EDE6;color:#9A9790}
+.adv-compare td{padding:.65rem 1rem;border-top:1px solid #E8E5E0;vertical-align:top;line-height:1.5}
+.adv-compare tr:nth-child(even) td{background:#FDFCFB}
+.adv-compare td:first-child{color:#5A5855;font-size:.8rem}
+.adv-compare td:nth-child(2){color:#1A2E22;font-weight:500}
+.adv-compare td:nth-child(3){color:#9A9790}
+.check{color:#2D5A3D;font-weight:700}
+.cross{color:#C06060}
+
+/* guarantee */
+.adv-guarantee{background:#F5FBF7;border:1px solid #B8D8C4;border-radius:10px;padding:1.5rem;margin:1.25rem 0;display:flex;gap:1rem;align-items:flex-start}
+.adv-guarantee-icon{font-size:1.4rem;flex-shrink:0}
+.adv-guarantee h4{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:#1A2E22;margin-bottom:.35rem}
+.adv-guarantee p{font-size:.86rem;color:#3A5A42;line-height:1.65}
+
+/* final CTA */
+.adv-final-cta{background:#0D0D0B;border-radius:10px;padding:2rem;text-align:center;margin-top:1.75rem}
+.adv-final-cta h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.adv-final-cta p{font-size:.88rem;color:rgba(255,255,255,.65);margin-bottom:1.25rem;line-height:1.6}
+.adv-final-btn{display:inline-block;background:#2D5A3D;color:#fff;padding:.9rem 2.5rem;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:.82rem;letter-spacing:.06em;font-weight:500;text-decoration:none;margin-bottom:.65rem}
+.adv-final-trust{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.4);line-height:1.7}
+
+/* scarcity bar */
+.adv-scarcity{background:#FFF8F0;border:1px solid #F0D09A;border-radius:8px;padding:.85rem 1.25rem;display:flex;align-items:center;gap:.75rem;margin:1.25rem 0;flex-wrap:wrap}
+.adv-scarcity-icon{color:#C4983A;font-size:1rem;flex-shrink:0}
+.adv-scarcity p{font-size:.83rem;color:#5A4010;line-height:1.5;flex:1}
+.adv-scarcity strong{color:#3A2800}
+
+/* ── FOOTER ──────────────────────────────── */
+footer{border-top:1px solid var(--border);padding:2rem 1.25rem;max-width:980px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+footer p{font-family:var(--fm);font-size:.65rem;color:var(--text-ter)}
+footer span{color:var(--green-light);font-family:var(--fm);font-size:.65rem}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-brand">Down To Ground, Task 3</span>
+    <span class="topbar-meta">Advertorial Rewrite, May 2026, Henry Ohaegbulam</span>
+  </div>
+</div>
+
+<!-- LOOM VIDEO -->
+<div style="max-width:980px;margin:2rem auto 0;padding:0 1.25rem">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:#5FAE78;letter-spacing:.16em;text-transform:uppercase;margin-bottom:.75rem;display:flex;align-items:center;gap:.6rem">
+    <span style="display:block;width:20px;height:1px;background:#5FAE78"></span>
+    Loom Walkthrough, Structural Changes Explained
+  </div>
+  <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;border:1px solid #343430;background:#131311">
+    <iframe
+      src="https://drive.google.com/file/d/1vXogzPgvhdWupi1L6vjuciPBuWVIsqtW/preview"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:10px"
+      allow="autoplay"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-top:.75rem">
+    <p style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:#5C5A55;line-height:1.5">
+      This video walks through every structural change made to the advertorial page and explains the conversion rationale behind each one.
+    </p>
+    <a href="https://drive.google.com/file/d/1vXogzPgvhdWupi1L6vjuciPBuWVIsqtW/view?usp=sharing"
+       target="_blank"
+       style="display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid #343430;color:#5FAE78;font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.06em;padding:.45rem 1rem;border-radius:6px;text-decoration:none;white-space:nowrap;transition:border-color .2s"
+       onmouseover="this.style.borderColor='#5FAE78'"
+       onmouseout="this.style.borderColor='#343430'">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Watch on Google Drive
+    </a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Task 3, Advertorial Optimisation</div>
+  <h1 class="hero-title"><em>Iterating</em> a Proven Angle</h1>
+  <p class="hero-desc">Full diagnosis of the current page, a complete visual rewrite showing exactly what the page should look like, structural change recommendations, and a before vs after comparison. Built to run as a clean A/B test against the existing version.</p>
+  <div class="meta-row">
+    <div class="meta-cell"><div class="meta-label">Page type</div><div class="meta-val">Advertorial listicle</div></div>
+    <div class="meta-cell"><div class="meta-label">Traffic source</div><div class="meta-val">Existing winning ads</div></div>
+    <div class="meta-cell"><div class="meta-label">Avatars</div><div class="meta-val">Sleep, pain, inflammation</div></div>
+    <div class="meta-cell"><div class="meta-label">Issues found</div><div class="meta-val">7 conversion problems</div></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('rewrite')">Full Rewritten Page</button>
+    <button class="tab-btn" onclick="switchTab('diagnosis')">Diagnosis</button>
+    <button class="tab-btn" onclick="switchTab('changes')">What Changed and Why</button>
+    <button class="tab-btn" onclick="switchTab('beforeafter')">Before vs After</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       TAB 1: FULL REWRITTEN ADVERTORIAL PAGE
+       ══════════════════════════════════════════ -->
+  <div class="tab-panel active" id="tab-rewrite">
+    <div class="info-box" style="margin-bottom:1.25rem">
+      <strong>What you are looking at:</strong> This is the full rewritten advertorial page, rendered exactly as it would appear to a visitor. Every section is live copy. The structural changes are built into the layout. This is ready to test against the current version.
+    </div>
+
+    <div class="adv-page">
+
+      <!-- strip -->
+      <div class="adv-strip">&#127758; &nbsp; Trusted by 50,000+ customers &nbsp;·&nbsp; Free shipping to US, UK, AU, NZ &nbsp;·&nbsp; 100% Grounding Guarantee</div>
+
+      <!-- article header -->
+      <div class="adv-article-header">
+        <div class="adv-category">Health and Wellness</div>
+        <h1 class="adv-h1">You Sleep 8 Hours.<br><em>You Still Wake Up Exhausted.</em><br>Here Is Why Nobody Has Fixed It Yet.</h1>
+        <p class="adv-deck">The one thing your body has been missing overnight, and the simple change that is helping thousands of people finally wake up with less pain, more energy, and sleep that actually feels like sleep.</p>
+        <div class="adv-byline-row">
+          <span class="adv-byline">By the Down To Ground team &nbsp;·&nbsp; Updated May 2026</span>
+          <span class="adv-share-note">Shared 4,200+ times</span>
+        </div>
+      </div>
+
+      <!-- body -->
+      <div class="adv-body">
+
+        <!-- OPENING -->
+        <div class="adv-opening">
+          <p>You go to bed at a reasonable time. You sleep through the night. But you wake up and your body does not feel rested. There is stiffness before you have even stood up. There is a tiredness that coffee does not fix. You carry a dull ache that follows you from room to room.</p>
+          <p>You have tried better pillows, magnesium supplements, melatonin, going to bed earlier. Some things help a little. Nothing fully fixes it.</p>
+          <div class="callout">"I was sleeping 8 hours and still waking up feeling like I had not slept at all. I thought something was wrong with me." A sentiment we hear every day.</div>
+          <p>If this sounds like you, keep reading. Because the reason your body is not recovering at night is almost certainly not what you think it is. And the fix is far simpler than anything you have already tried.</p>
+        </div>
+
+        <!-- SECTION 1 -->
+        <div class="adv-section">
+          <div class="adv-section-tag">1 of 8</div>
+          <h2 class="adv-section-h2">The Real Reason Your Body Is Not Recovering Overnight</h2>
+          <p>For thousands of years, humans touched the earth every single day. Bare feet on grass, soil, and sand. That contact did something important that modern life has completely removed.</p>
+          <p>The earth carries a natural, mild negative electrical charge. When your body makes contact with it, free electrons flow in. These electrons act as a powerful natural antioxidant. They neutralize the harmful molecules inside your body called free radicals, the same molecules that drive chronic inflammation, pain, and disrupted sleep.</p>
+          <p>Today, we never touch the earth. Rubber-soled shoes on concrete floors. Synthetic mattresses lifted off the ground. Many people go years without a single moment of real contact with the earth's surface. The free radicals that cause inflammation have nowhere to go. They build up day after day. The body cannot properly recover at night because it is missing the one input it has always relied on to reset.</p>
+          <p><strong>That is what grounding fixes. And it takes two minutes to set up.</strong></p>
+
+          <div class="adv-img-ph"><span>&#127758;</span>IMAGE: Split visual. Left side: person barefoot on grass. Right side: person in rubber shoes on concrete. Caption: "The connection we lost."</div>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div class="adv-section">
+          <div class="adv-section-tag">2 of 8</div>
+          <h2 class="adv-section-h2">What Happens Inside Your Body When You Reconnect</h2>
+          <p>When your body reconnects to the earth's charge overnight, three things happen in sequence.</p>
+          <div class="adv-steps">
+            <div class="adv-step">
+              <div class="adv-step-num">1</div>
+              <div class="adv-step-content">
+                <div class="adv-step-title">Inflammation drops</div>
+                <div class="adv-step-body">Free electrons neutralize the free radicals causing your joints and muscles to ache. Many people notice less stiffness within the first few days.</div>
+              </div>
+            </div>
+            <div class="adv-step">
+              <div class="adv-step-num">2</div>
+              <div class="adv-step-content">
+                <div class="adv-step-title">Sleep deepens</div>
+                <div class="adv-step-body">Grounding shifts the nervous system from fight-or-flight into rest and recover mode. Cortisol, the stress hormone that keeps you wired at night, normalizes. Your body finally uses sleep the way it was designed to.</div>
+              </div>
+            </div>
+            <div class="adv-step">
+              <div class="adv-step-num">3</div>
+              <div class="adv-step-content">
+                <div class="adv-step-title">Energy returns</div>
+                <div class="adv-step-body">When inflammation is lower and sleep is deeper, your body actually repairs itself overnight. You wake up with the energy a full night of sleep is supposed to give you, but never did.</div>
+              </div>
+            </div>
+          </div>
+          <div class="adv-img-ph"><span>&#128200;</span>IMAGE OR GIF: Simple animated diagram showing the electron flow from earth through the cord into the body while sleeping. Clean, approachable, not clinical.</div>
+        </div>
+
+        <!-- SECTION 3 -->
+        <div class="adv-section">
+          <div class="adv-section-tag">3 of 8</div>
+          <h2 class="adv-section-h2">The Research Is Real. Here Is What the Studies Actually Found.</h2>
+          <p>This is not a wellness trend or a social media claim. There are over 25 peer-reviewed studies on grounding published in established medical journals. Here is what the research actually measured.</p>
+
+          <div class="adv-study">
+            <div class="adv-study-lbl">Study 1 of 3 &nbsp;·&nbsp; Ghaly and Teplitz, 2004 &nbsp;·&nbsp; Journal of Alternative and Complementary Medicine</div>
+            <p>Researchers measured cortisol levels in people who slept grounded versus those who did not. The grounded group showed a normalized cortisol pattern overnight. Their bodies used sleep for recovery the way they were supposed to. All 12 participants reported better sleep, less pain, and reduced stress.</p>
+          </div>
+
+          <div class="adv-study">
+            <div class="adv-study-lbl">Study 2 of 3 &nbsp;·&nbsp; Chevalier et al., 2013 &nbsp;·&nbsp; Journal of Alternative and Complementary Medicine</div>
+            <p>Researchers found that grounding reduces blood viscosity, meaning blood moves more freely through the body. Better circulation means less fluid retention, less swelling, and more oxygen delivered to muscles and joints overnight.</p>
+          </div>
+
+          <div class="adv-study">
+            <div class="adv-study-lbl">Study 3 of 3 &nbsp;·&nbsp; Chevalier et al., 2015 &nbsp;·&nbsp; Journal of Inflammation Research</div>
+            <p>Thermal imaging of injured areas showed significant reductions in inflammation markers after consistent grounding. Less inflammation means less pain, less morning stiffness, and faster recovery from daily activity.</p>
+          </div>
+
+          <p style="margin-top:.85rem"><strong>These are published, cited, independently verified findings. Not brand claims.</strong></p>
+        </div>
+
+        <!-- SECTION 4 -->
+        <div class="adv-section">
+          <div class="adv-section-tag">4 of 8</div>
+          <h2 class="adv-section-h2">Is It Safe?</h2>
+          <div class="adv-safety">
+            <div class="adv-safety-icon">&#9432;</div>
+            <p><strong>Yes. Completely.</strong> The mattress cover connects via a 15-foot cord to the ground port of a standard wall outlet. That is the round hole at the bottom of the socket. The ground port carries no electricity and no voltage. It is a physical connection to the earth beneath your building. You are not using electricity. You are using the earth. No different to stepping barefoot onto grass. We include a free Grounding Tester with every order so you can verify the connection yourself before you begin.</p>
+          </div>
+          <p>No current. No risk. Completely safe for all ages, including children and pets.</p>
+        </div>
+
+        <!-- MID PAGE CTA -->
+        <div class="adv-mid-cta">
+          <h3>Ready to try it tonight?</h3>
+          <p>Get 42% off today. Free Grounding Tester included with every order. Free shipping to US, UK, AU and NZ.</p>
+          <div><a href="https://downtoground.co/products/onearthing-mattress-cover" class="adv-cta-btn">Get the Mattress Cover, 42% Off</a></div>
+          <div class="adv-cta-trust">Free shipping &nbsp;·&nbsp; 100% Grounding Guarantee &nbsp;·&nbsp; 50,000+ customers</div>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div class="adv-section">
+          <div class="adv-section-tag">5 of 8</div>
+          <h2 class="adv-section-h2">Two Minutes to Set Up. Every Night After That Is Automatic.</h2>
+          <p>Place the mattress cover on your mattress. Pull your regular fitted sheet over the top. Plug the cord into the ground port of your nearest wall outlet.</p>
+          <p>That is the full setup. You do not change how you sleep. You do not take anything. You do not track anything. You do not need to remember to do anything each night. While you sleep, the connection is working. You do nothing extra.</p>
+          <p>The only requirement is a fitted sheet made from natural fabric such as cotton, linen, or bamboo. Synthetic sheets block the connection. Natural fabric lets it through.</p>
+          <div class="adv-img-ph"><span>&#128716;</span>IMAGE: Three-step visual. Step 1, place cover on mattress. Step 2, pull sheet over top. Step 3, plug cord into wall. Clean, simple, reassuring.</div>
+        </div>
+
+        <!-- SECTION 6 -->
+        <div class="adv-section">
+          <div class="adv-section-tag">6 of 8</div>
+          <h2 class="adv-section-h2">Why Down To Ground and Not a Cheaper Option</h2>
+          <p>Not all grounding products deliver the same results. Here is the difference.</p>
+
+          <table class="adv-compare">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Down To Ground</th>
+                <th>Cheap silver-thread sheets</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Conductivity material</td><td><span class="check">&#10003;</span> Carbon-infused surface</td><td><span class="cross">&#10005;</span> Silver thread weave</td></tr>
+              <tr><td>Durability after washing</td><td><span class="check">&#10003;</span> Does not degrade</td><td><span class="cross">&#10005;</span> Conductivity drops over time</td></tr>
+              <tr><td>Individual pre-ship testing</td><td><span class="check">&#10003;</span> Every unit tested</td><td><span class="cross">&#10005;</span> Not standard</td></tr>
+              <tr><td>Grounding Tester included</td><td><span class="check">&#10003;</span> Free with every order</td><td><span class="cross">&#10005;</span> Rarely included</td></tr>
+              <tr><td>Works through fitted sheet</td><td><span class="check">&#10003;</span> Yes, natural fabric</td><td>Varies by product</td></tr>
+            </tbody>
+          </table>
+          <p>Most cheaper grounding sheets use silver threads woven into fabric. Those threads degrade with every wash. You end up paying for a product that gradually stops working. Down To Ground uses a carbon-infused surface engineered for lasting, consistent conductivity. It does not wash out. It does not wear off.</p>
+        </div>
+
+        <!-- SECTION 7 -->
+        <div class="adv-section">
+          <div class="adv-section-tag">7 of 8</div>
+          <h2 class="adv-section-h2">What Real Customers Say</h2>
+          <p>These are real customers writing in their own words. Not summaries. Not brand rewrites.</p>
+          <div class="adv-reviews">
+            <div class="adv-review">
+              <div class="adv-review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <div class="adv-review-text">"After the second night my sciatica pain had died down completely. Waking up with more energy than before. Pleasantly surprised, honestly."</div>
+              <div class="adv-review-name">Taylor &nbsp;·&nbsp; Verified buyer</div>
+            </div>
+            <div class="adv-review">
+              <div class="adv-review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <div class="adv-review-text">"I'm so happy that I decided to try grounding. My swelling has reduced and I feel so much lighter. I would never not sleep without it."</div>
+              <div class="adv-review-name">Debra &nbsp;·&nbsp; Verified buyer</div>
+            </div>
+            <div class="adv-review">
+              <div class="adv-review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <div class="adv-review-text">"I used to only sleep 3 to 4 hours a night and had lots of body aches and restless legs. I bought the grounding sheet and slept like a baby for 9 hours straight. Woke with less body pain. I am absolutely sold."</div>
+              <div class="adv-review-name">Verified buyer &nbsp;·&nbsp; Trustpilot</div>
+            </div>
+            <div class="adv-review">
+              <div class="adv-review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <div class="adv-review-text">"I have been sleeping on the full size for several weeks. Less inflammation, improved deeper sleep, feeling of less stress. So much so that I ordered another one for my mother."</div>
+              <div class="adv-review-name">Shari &nbsp;·&nbsp; Verified buyer</div>
+            </div>
+          </div>
+          <div class="adv-review-count">718 verified reviews &nbsp;·&nbsp; 99% rated 4 or 5 stars</div>
+        </div>
+
+        <!-- SECTION 8 -->
+        <div class="adv-section">
+          <div class="adv-section-tag">8 of 8</div>
+          <h2 class="adv-section-h2">You Are Fully Covered</h2>
+          <div class="adv-guarantee">
+            <div class="adv-guarantee-icon">&#9989;</div>
+            <div>
+              <h4>100% Grounding Guarantee</h4>
+              <p>Every order includes a Grounding Tester. Plug it into your outlet before you begin. If the cover is not properly grounded, contact us and we refund you in full. No back and forth. No conditions. We stand behind this because in five years of selling grounding products, the most common message we receive is not from customers asking for refunds. It is customers telling us they have ordered a second one for their partner.</p>
+            </div>
+          </div>
+          <p>We also offer free shipping to the US, UK, Australia, and New Zealand. Lifetime support before and after your purchase.</p>
+        </div>
+
+        <!-- SCARCITY (no fake timer) -->
+        <div class="adv-scarcity">
+          <div class="adv-scarcity-icon">&#9888;</div>
+          <p><strong>Stock update:</strong> We sell out regularly and cannot always guarantee availability. The 42% discount shown today is available while stock lasts.</p>
+        </div>
+
+        <!-- FINAL CTA -->
+        <div class="adv-final-cta">
+          <h2>Get 42% Off, Free Shipping, Free Grounding Tester</h2>
+          <p>Trusted by 50,000+ customers across the US, UK, Australia, and New Zealand. Start sleeping grounded tonight.</p>
+          <div><a href="https://downtoground.co/products/onearthing-mattress-cover" class="adv-final-btn">Claim Your Mattress Cover</a></div>
+          <div class="adv-final-trust">Free shipping &nbsp;·&nbsp; 100% Grounding Guarantee &nbsp;·&nbsp; If your tester shows it is not grounded, we refund you in full &nbsp;·&nbsp; 718 verified reviews</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       TAB 2: DIAGNOSIS
+       ══════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-diagnosis">
+    <div class="info-box">
+      <strong>What the page is doing right:</strong> The listicle format is solid. A discount offer, a guarantee, social proof, and a mechanism explanation all exist. The bones are good. The copy on those bones is what is costing conversions.
+    </div>
+
+    <div class="issue-card">
+      <div class="issue-hdr"><div class="issue-num">1</div><div class="issue-ttl">No avatar identification at the top</div></div>
+      <div class="issue-bdy">
+        <p>The page opens with generic benefit language. Nobody stops scrolling for "improve your health naturally." A person with chronic pain or bad sleep needs to see their exact experience named in the first sentence or they leave immediately.</p>
+        <div class="issue-orig"><div class="issue-orig-lbl">Current opening</div>"Meet the most convenient and natural way to improve your health."</div>
+        <div class="issue-fix"><div class="issue-fix-lbl">The fix</div>Open with the reader's experience. Name the problem before naming the product.</div>
+      </div>
+    </div>
+
+    <div class="issue-card">
+      <div class="issue-hdr"><div class="issue-num">2</div><div class="issue-ttl">The mechanism explanation is vague</div></div>
+      <div class="issue-bdy">
+        <p>Cold traffic needs a real reason to believe before they buy. "Soak up the earth's healing energy" is not a reason. It is a vague claim that gives a skeptical reader permission to leave.</p>
+        <div class="issue-orig"><div class="issue-orig-lbl">Current copy</div>"Simply put the grounding mattress cover on your bed and soak up the earth's healing energy while you sleep."</div>
+        <div class="issue-fix"><div class="issue-fix-lbl">The fix</div>Explain free electrons, inflammation, cortisol, and circulation in plain language. The science is real. Use it.</div>
+      </div>
+    </div>
+
+    <div class="issue-card">
+      <div class="issue-hdr"><div class="issue-num">3</div><div class="issue-ttl">Typo in the science section</div></div>
+      <div class="issue-bdy">
+        <p>"Inflammaiton" appears in the copy. A health buyer evaluating whether to trust a brand will notice this in the exact section where scientific credibility matters most.</p>
+        <div class="issue-orig"><div class="issue-orig-lbl">Current copy</div>"Less inflammaiton, longer and deeper sleep, more energy..."</div>
+        <div class="issue-fix"><div class="issue-fix-lbl">The fix</div>Corrected and rewritten. No typos anywhere in the new copy.</div>
+      </div>
+    </div>
+
+    <div class="issue-card">
+      <div class="issue-hdr"><div class="issue-num">4</div><div class="issue-ttl">CTA appears before trust is built</div></div>
+      <div class="issue-bdy">
+        <p>"Bonus: You can get the Down To Ground Mattress Cover at an all time low price here" appears twice before the reader has a reason to want the product. Asking for the sale before building belief pushes people away.</p>
+        <div class="issue-fix"><div class="issue-fix-lbl">The fix</div>First CTA placed after Section 4 (safety and science), the moment of peak credibility. Final CTA after the guarantee, the natural end of the decision journey.</div>
+      </div>
+    </div>
+
+    <div class="issue-card">
+      <div class="issue-hdr"><div class="issue-num">5</div><div class="issue-ttl">The replica warning is placed too early</div></div>
+      <div class="issue-bdy">
+        <p>"You have to be careful not to fall for the cheap replicas on Amazon" introduces doubt about the product category before the reader has decided they want the product. It creates confusion and hesitation at the wrong moment.</p>
+        <div class="issue-fix"><div class="issue-fix-lbl">The fix</div>Moved to Section 6, just before the final CTA. Rewritten as a positive comparison table showing why Down To Ground specifically is the better choice.</div>
+      </div>
+    </div>
+
+    <div class="issue-card">
+      <div class="issue-hdr"><div class="issue-num">6</div><div class="issue-ttl">Social proof is paraphrased and weak</div></div>
+      <div class="issue-bdy">
+        <p>"Most of them say they would never not sleep without it" is a brand summary of what customers said. It sounds like marketing. Real names and verbatim quotes are dramatically more persuasive.</p>
+        <div class="issue-orig"><div class="issue-orig-lbl">Current copy</div>"Thousands just like you are choosing to sleep grounded and most of them say they would never 'not sleep without it'."</div>
+        <div class="issue-fix"><div class="issue-fix-lbl">The fix</div>Four verbatim named reviews pulled from the product page. Specific outcomes. Real language. 718-review count stated explicitly.</div>
+      </div>
+    </div>
+
+    <div class="issue-card">
+      <div class="issue-hdr"><div class="issue-num">7</div><div class="issue-ttl">The countdown timer resets on every page load</div></div>
+      <div class="issue-bdy">
+        <p>The timer resets when the page is refreshed. A reader who notices this loses trust in every other claim on the page. It destroys credibility at the exact moment the reader is deciding whether to buy.</p>
+        <div class="issue-fix"><div class="issue-fix-lbl">The fix</div>Removed entirely. Replaced with static, honest scarcity copy: "We sell out regularly. The 42% discount is available while stock lasts." The discount and guarantee are strong enough without a fake timer.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       TAB 3: WHAT CHANGED AND WHY
+       ══════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-changes">
+    <div class="info-box"><strong>How to read this:</strong> Each card explains one change, why it was made, and how it should improve conversion rate. These are the notes you would walk a CRO team through before running the test.</div>
+
+    <div class="change-card">
+      <div class="change-hdr"><div class="change-num">1</div><div class="change-ttl">Headline rewritten to name the specific problem</div></div>
+      <div class="change-bdy">
+        <p>The new headline targets the exact experience the avatar is living. Sleeping enough and still waking up exhausted. It replaces a generic wellness opener with a problem-specific statement the right reader immediately recognizes as their own.</p>
+        <p><strong>Why this lifts conversion:</strong> The first job of a headline is to make the right person feel seen. When someone reads a description of their exact experience, they stop scrolling. They feel the page was written for them. That is the switch that turns a scan into a read.</p>
+        <div class="impact-badge">&#8593; Expected impact: Lower bounce rate, higher average read depth</div>
+      </div>
+    </div>
+
+    <div class="change-card">
+      <div class="change-hdr"><div class="change-num">2</div><div class="change-ttl">Avatar identification paragraphs added before Section 1</div></div>
+      <div class="change-bdy">
+        <p>The opening now mirrors the reader's experience in plain language before making any product claim. This is the single highest-leverage addition in the rewrite.</p>
+        <p><strong>Why this lifts conversion:</strong> People do not buy products. They buy solutions to problems they have already recognized. The opening does the recognition work. By the time the reader reaches Section 1, they are nodding. They are reading their own situation. That emotional state is what a persuasive page needs to create before it introduces anything to buy.</p>
+        <div class="impact-badge">&#8593; Expected impact: Higher engagement, higher time on page</div>
+      </div>
+    </div>
+
+    <div class="change-card">
+      <div class="change-hdr"><div class="change-num">3</div><div class="change-ttl">Mechanism explained in plain, specific language</div></div>
+      <div class="change-bdy">
+        <p>Free electrons, free radicals, cortisol, blood viscosity. Each concept explained in two sentences at Grade 6 reading level. No jargon. No vague wellness language.</p>
+        <p><strong>Why this lifts conversion:</strong> Skeptical buyers have been burned by products that made big claims and delivered nothing. A specific mechanism explanation builds the credibility generic wellness language never can. It also reduces refund rates because buyers who understand why the product works have realistic expectations when they receive it.</p>
+        <div class="impact-badge">&#8593; Expected impact: Higher trust score, lower refund rate</div>
+      </div>
+    </div>
+
+    <div class="change-card">
+      <div class="change-hdr"><div class="change-num">4</div><div class="change-ttl">Studies cited with specific findings, not just mentioned</div></div>
+      <div class="change-bdy">
+        <p>The rewrite names three studies with their year, journal, finding, and what the finding means in plain English. The original said "25+ peer-reviewed studies prove grounding is beneficial."</p>
+        <p><strong>Why this lifts conversion:</strong> "Studies prove it" is a brand claim. "A 2004 study measured cortisol in 12 grounded sleepers and found X" is a fact. These are not the same thing to a skeptical reader. Specificity signals honesty. Vagueness signals something to hide.</p>
+        <div class="impact-badge">&#8593; Expected impact: Higher credibility with research-aware buyers</div>
+      </div>
+    </div>
+
+    <div class="change-card">
+      <div class="change-hdr"><div class="change-num">5</div><div class="change-ttl">First CTA moved to after the science section</div></div>
+      <div class="change-bdy">
+        <p>The first CTA now appears after Section 4, the safety and science explanation. This is the point of peak credibility. The reader has just seen the mechanism, the studies, and the safety explanation. They are ready.</p>
+        <p><strong>Why this lifts conversion:</strong> Asking for the sale before the reader believes the product works does not speed anything up. It pushes people away. A CTA placed at the right moment is not an interruption. It is an answer to the natural question: where do I get this?</p>
+        <div class="impact-badge">&#8593; Expected impact: Higher mid-page CTA click rate</div>
+      </div>
+    </div>
+
+    <div class="change-card">
+      <div class="change-hdr"><div class="change-num">6</div><div class="change-ttl">Added a product comparison table in Section 6</div></div>
+      <div class="change-bdy">
+        <p>A side-by-side table comparing Down To Ground to cheap silver-thread alternatives. This replaces the early "beware of replicas" warning and answers the question every price-sensitive buyer has before they reach the CTA.</p>
+        <p><strong>Why this lifts conversion:</strong> The reader arriving at the final CTA has one remaining question: why should I choose this brand over something cheaper? The comparison table answers that at the right moment. It justifies the price, reinforces the guarantee, and closes the final objection before the buy button appears.</p>
+        <div class="impact-badge">&#8593; Expected impact: Lower price objection dropout at final CTA</div>
+      </div>
+    </div>
+
+    <div class="change-card">
+      <div class="change-hdr"><div class="change-num">7</div><div class="change-ttl">Verbatim named reviews replace paraphrased social proof</div></div>
+      <div class="change-bdy">
+        <p>Four real verbatim reviews from verified buyers replace the brand summary. Specific outcomes, real names, real language pulled directly from the product page.</p>
+        <p><strong>Why this lifts conversion:</strong> Verbatim customer language contains vocabulary and phrasing a brand would never use. That is exactly why it works. The reader recognizes it as real. Paraphrased reviews sound like marketing. Real quotes sound like people. The 718-review count and 99% star rating are also stated plainly as statistical anchors rather than vague claims.</p>
+        <div class="impact-badge">&#8593; Expected impact: Higher social proof conversion, less hesitation at CTA</div>
+      </div>
+    </div>
+
+    <div class="change-card">
+      <div class="change-hdr"><div class="change-num">8</div><div class="change-ttl">Fake countdown timer removed, replaced with honest scarcity</div></div>
+      <div class="change-bdy">
+        <p>The resetting countdown timer is gone. Replaced with static copy: "We sell out regularly. The 42% discount is available while stock lasts." This is honest, impossible to expose as fake, and still creates a genuine reason to act now.</p>
+        <p><strong>Why this lifts conversion:</strong> A fake timer that a reader catches resetting does not just fail to create urgency. It actively destroys trust. That doubt spreads to every other claim on the page. Removing it costs nothing. The brand's discount and guarantee are strong enough to carry the CTA without manufactured pressure.</p>
+        <div class="impact-badge">&#8593; Expected impact: Higher trust, lower exit rate at CTA section</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       TAB 4: BEFORE VS AFTER
+       ══════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-beforeafter">
+    <div class="info-box"><strong>How to read this:</strong> Five of the most important changes shown side by side. Original copy on the left. Rewritten version on the right.</div>
+
+    <div class="card" style="margin-bottom:.75rem"><div class="card-label">Headline</div></div>
+    <div class="ba-grid">
+      <div class="ba-col"><div class="ba-lbl before">Before</div><div class="ba-content">Meet the most convenient and natural way to improve your health.</div></div>
+      <div class="ba-col"><div class="ba-lbl after">After</div><div class="ba-content"><em>You Sleep 8 Hours. You Still Wake Up Exhausted. Here Is Why Nobody Has Fixed It Yet.</em></div></div>
+    </div>
+
+    <div class="card" style="margin-bottom:.75rem;margin-top:1.25rem"><div class="card-label">Opening paragraph</div></div>
+    <div class="ba-grid">
+      <div class="ba-col"><div class="ba-lbl before">Before</div><div class="ba-content">Grounding has been proven to reduce inflammation (the silent killer), reduce pain, improve sleep, boost mood, circulation and improve energy levels and more, all while you sleep.</div></div>
+      <div class="ba-col"><div class="ba-lbl after">After</div><div class="ba-content">You go to bed at a reasonable time. You sleep through the night. But you wake up and your body does not feel rested. There is stiffness before you have even stood up. There is a tiredness that coffee does not fix. You have tried better pillows, sleep supplements, going to bed earlier. Some things help a little. Nothing fully fixes it.</div></div>
+    </div>
+
+    <div class="card" style="margin-bottom:.75rem;margin-top:1.25rem"><div class="card-label">Mechanism explanation</div></div>
+    <div class="ba-grid">
+      <div class="ba-col"><div class="ba-lbl before">Before</div><div class="ba-content">When you're body is connected to the earth, you soak up the earths electrons, which neutralise the harmful free radicals in your body (the things that cause inflammation). As the inflammation goes down, your health gradually improves.</div></div>
+      <div class="ba-col"><div class="ba-lbl after">After</div><div class="ba-content">The earth carries a natural electrical charge. When your body connects to it, free electrons flow in. These electrons act as a natural antioxidant. They neutralize the molecules inside your body that drive inflammation, poor sleep, and pain. Today, we never touch the earth. The free radicals that cause inflammation have nowhere to go. They build up. The body cannot properly recover at night because it is missing the one input it has always relied on to reset.</div></div>
+    </div>
+
+    <div class="card" style="margin-bottom:.75rem;margin-top:1.25rem"><div class="card-label">Social proof</div></div>
+    <div class="ba-grid">
+      <div class="ba-col"><div class="ba-lbl before">Before</div><div class="ba-content">Thousands just like you are choosing to sleep grounded and most of them say they would never "not sleep without it." We commonly hear stories of customers swelling reducing, insomnia that's disappeared, depression that's lifted and fatigue that's vanished.</div></div>
+      <div class="ba-col"><div class="ba-lbl after">After</div><div class="ba-content"><em>"After the second night my sciatica pain had died down completely. Waking up with more energy than before."</em> <strong>Taylor, verified buyer.</strong><br><br><em>"I slept like a baby for 9 hours straight. Woke with less body pain. I am absolutely sold."</em> <strong>Verified buyer, Trustpilot.</strong><br><br>718 verified reviews. 99% rated 4 or 5 stars.</div></div>
+    </div>
+
+    <div class="card" style="margin-bottom:.75rem;margin-top:1.25rem"><div class="card-label">CTA and urgency</div></div>
+    <div class="ba-grid">
+      <div class="ba-col"><div class="ba-lbl before">Before</div><div class="ba-content">Flash Sale! This limited-time deal is in high demand and stock keeps selling out. [Resetting timer: 01:47:23] Try it today with a 100% Grounding Guarantee!</div></div>
+      <div class="ba-col"><div class="ba-lbl after">After</div><div class="ba-content"><strong>Get 42% Off, Free Shipping, Free Grounding Tester.</strong> Trusted by 50,000+ customers. Stock is limited and we sell out regularly. 100% Grounding Guarantee. If your tester shows it is not grounded, we refund you in full. No conditions.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>Task 3 , Advertorial Optimisation , Down To Ground Creative Assessment , May 2026</p>
+  <span>Henry Ohaegbulam</span>
+</footer>
+
+<script>
+function switchTab(id){
+  const ids=['rewrite','diagnosis','changes','beforeafter'];
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
+    b.classList.toggle('active',ids[i]===id);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p=>{
+    p.classList.toggle('active',p.id==='tab-'+id);
+  });
+  document.querySelector('.tabs-wrap').scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>
